@@ -6,15 +6,17 @@
 /*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:30:40 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/01 13:55:48 by ycontre          ###   ########.fr       */
+/*   Updated: 2024/08/01 17:58:32 by ycontre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/malloc.h"
+#include "includes/mymalloc.h"
 
 int main(void)
 {
 	void *test = malloc(42);
-	(void) test;
+	test = malloc(42);
+	
+	ft_printf("%p\n", test);
 	return (0);
 }
