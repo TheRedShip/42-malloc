@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+         #
+#    By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:17:35 by rgramati          #+#    #+#              #
-#    Updated: 2024/08/01 14:04:44 by ycontre          ###   ########.fr        #
+#    Updated: 2024/08/02 00:42:19 by TheRed           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,12 @@ SRCS_DIR	:=	srcs
 
 OBJS_DIR	:=	.objs
 
-ALL_SRCS	:=	malloc.c
+SRC_LST		:=	lst/lst_init.c	\
+				lst/lst_utils.c
+
+ALL_SRCS	:=	malloc.c	\
+				$(SRC_LST)	\
+
 
 SRCS		:=	$(ALL_SRCS:%=$(SRCS_DIR)/%)
 

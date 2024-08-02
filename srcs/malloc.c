@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:09:57 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/01 18:15:26 by ycontre          ###   ########.fr       */
+/*   Updated: 2024/08/02 01:50:48 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mymalloc.h"
 
-t_block *block = NULL;
+t_block *g_block = NULL;
 
-void *alignAdress(void *ptr)
+void *align_adress(void *ptr)
 {
 	if (((size_t)ptr) % ALIGNMENT != 0)
 		ptr += ALIGNMENT - (((size_t)ptr) % ALIGNMENT);
@@ -25,6 +25,7 @@ t_size choose_type(size_t size)
 {
 	t_size	type;
 	
+	type.user_size = size;
 	if (size <= TINY_AUTHORISED_SIZE)
 	{
 		type.size = TINY_SIZE;
@@ -43,23 +44,41 @@ t_size choose_type(size_t size)
 	return (type);
 }
 
-t_block *init_heap(size_t size, t_size type)
+t_block *get_using_block(t_size type)
 {
-	t_block				*ptr;
+	int i = 0; // TODO: remove
+	t_block *using_block;
+
+	if (!g_block)
+		block_lstadd_back(&g_block, block_lstnew(type));
 	
-	ptr = mmap(NULL, type.size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-	ptr->type = type.type;
-	ptr->size_left = type.size;
-	ptr->chunks = NULL;
-	ptr->next = NULL;
-	
-	(void) size;
-	return (ptr);
+	using_block = g_block;
+	while (using_block)
+	{
+		if (using_block->type == type.type && type.user_size <= using_block->size_left)
+			break ;
+		i++;
+		using_block = using_block->next;
+	}
+	if (!using_block)
+		ft_printf("new using block id: %d size left : %u\n", i, type.size - (size_t)align_adress((void *)sizeof(t_block)));
+	else
+		ft_printf("using block id: %d size left : %u\n", i, using_block->size_left);
+	return (using_block);
 }
 
-void allocate_block(size_t size, t_size type)
+void	heap_allocate(t_size type)
 {
-	
+	t_block *using_block;
+
+	using_block = get_using_block(type);
+	if (!using_block)
+	{
+		using_block = block_lstnew(type);
+		block_lstadd_back(&g_block, using_block);
+	}
+	using_block->size_left -= type.user_size + (size_t)align_adress((void *)sizeof(t_chunk));	
+	chunk_lstadd_back(&using_block->chunks, chunk_lstnew(type, using_block));
 }
 
 void *malloc(size_t size)
@@ -67,12 +86,9 @@ void *malloc(size_t size)
 	t_size	type;
 
 	type = choose_type(size);
-	if (!block)
-		block = init_heap(size, type);
-	else
-		allocate_block(size, type);
-		
-	ft_printf("%p\n", block);
+	heap_allocate(type);
+	
+	// ft_printf("%p %p\n", g_block, g_block->next);
 
 	(void) size;
 	return (NULL);	
