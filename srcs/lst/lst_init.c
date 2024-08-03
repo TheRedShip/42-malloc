@@ -43,21 +43,19 @@ void	block_lstadd_back(t_block **lst, t_block *new)
 
 t_chunk	*chunk_lstnew(t_size type, t_block *parent)
 {
-	int			offset;
+	size_t		offset;
 	t_chunk		*temp;
 	t_chunk		*ptr;
-	
+
 	temp = parent->chunks;
 	offset = sizeof(t_block);
 	while (temp)
 	{
-		offset += sizeof(t_chunk) + temp->size;
+		offset += (size_t)align_adress((void *)sizeof(t_chunk)); + (size_t)align_adress((void *)temp->size);
 		temp = temp->next;
 	}
-	
-	ft_printf("offset: %d base_address = %u end_address = %u final_address = %u\n", offset, g_block, g_block + TINY_SIZE, parent + offset);
 
-	ptr = (t_chunk *)(parent + offset);
+	ptr = (t_chunk *)((void *)parent + offset);
 	ptr->size = type.user_size;
 	ptr->next = NULL;
 	return (ptr);

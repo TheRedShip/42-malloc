@@ -6,7 +6,7 @@
 /*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:10:41 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/02 01:52:36 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/04 01:57:28 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ typedef struct s_size
 	size_t				user_size;
 }	t_size;
 
-typedef struct s_chunk //12 bytes
+typedef struct s_chunk //12 bytes // 16 bytes
 {
-	int				size;
+	size_t			size;
 	struct s_chunk	*next;
 }		t_chunk;
 
-typedef struct s_block //24 bytes
+typedef struct s_block //24 bytes // 32 bytes
 {
 	t_block_size		type;
 	size_t				size_left;
@@ -60,6 +60,8 @@ typedef struct s_block //24 bytes
 	struct s_block		*next;
 }		t_block;
 
+
+void	*malloc(size_t size);
 void	*align_adress(void *ptr);
 
 t_block	*block_lstnew(t_size type);

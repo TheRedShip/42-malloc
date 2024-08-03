@@ -31,6 +31,5 @@ t_chunk	*chunk_lstlast(t_chunk *lst)
 		i++;
 		lst = lst->next;
 	}
-	ft_printf("chunk_lstlast: %d\n", i);
 	return (lst);
 }
