@@ -6,7 +6,7 @@
 /*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:10:41 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/04 16:30:54 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/04 17:19:15 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@
 #define SMALL_SIZE (size_t)(PAGE_SIZE * 128) // 131072
 #define LARGE_SIZE (size_t)(2147483647)
 
-#define ALIGNED_BLOCK (size_t)(align_adress((void *)(sizeof(t_block))))
-#define ALIGNED_CHUNK (size_t)(align_adress((void *)(sizeof(t_chunk))))
+#define ALIGNED_BLOCK (size_t)(align_address((void *)(sizeof(t_block))))
+#define ALIGNED_CHUNK (size_t)(align_address((void *)(sizeof(t_chunk))))
 
-#define TINY_AUTHORISED_SIZE (size_t)(align_adress((void *)(((TINY_SIZE - ALIGNED_BLOCK - ALIGNED_CHUNK * 100) / 100) - ALIGNMENT)))
-#define SMALL_AUTHORISED_SIZE (size_t)(align_adress((void *)(((SMALL_SIZE - ALIGNED_BLOCK - ALIGNED_CHUNK * 100) / 100) - ALIGNMENT)))
+#define TINY_AUTHORISED_SIZE (size_t)(align_address((void *)(((TINY_SIZE - ALIGNED_BLOCK - ALIGNED_CHUNK * 100) / 100) - ALIGNMENT)))
+#define SMALL_AUTHORISED_SIZE (size_t)(align_address((void *)(((SMALL_SIZE - ALIGNED_BLOCK - ALIGNED_CHUNK * 100) / 100) - ALIGNMENT)))
 
 typedef enum e_block_size
 {
@@ -62,7 +62,10 @@ typedef struct s_block //24 bytes // 32 bytes
 
 
 void	*malloc(size_t size);
-void	*align_adress(void *ptr);
+void	show_alloc_mem();
+
+void	*align_address(void *ptr);
+t_size	choose_type(size_t size);
 
 t_block	*block_lstnew(t_size type);
 void	block_lstadd_back(t_block **lst, t_block *new);

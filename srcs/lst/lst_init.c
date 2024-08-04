@@ -22,7 +22,7 @@ t_block	*block_lstnew(t_size type)
 	if (ptr == MAP_FAILED)
 		return (NULL);
 	ptr->type = type.type;
-	ptr->size_left = type.size - (size_t)align_adress((void *)sizeof(t_block));
+	ptr->size_left = type.size - (size_t)align_address((void *)sizeof(t_block));
 	ptr->chunks = NULL;
 	ptr->next = NULL;
 	return (ptr);
@@ -53,7 +53,7 @@ t_chunk	*chunk_lstnew(t_size type, t_block *parent)
 	offset = sizeof(t_block);
 	while (temp)
 	{
-		offset += (size_t)align_adress((void *)sizeof(t_chunk)) + (size_t)align_adress((void *)temp->size);
+		offset += (size_t)align_address((void *)sizeof(t_chunk)) + (size_t)align_address((void *)temp->size);
 		temp = temp->next;
 	}
 

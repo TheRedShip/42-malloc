@@ -6,7 +6,7 @@
 #    By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:17:35 by rgramati          #+#    #+#              #
-#    Updated: 2024/08/02 00:42:19 by TheRed           ###   ########.fr        #
+#    Updated: 2024/08/04 17:00:51 by TheRed           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,8 +52,12 @@ OBJS_DIR	:=	.objs
 SRC_LST		:=	lst/lst_init.c	\
 				lst/lst_utils.c
 
-ALL_SRCS	:=	malloc.c	\
-				$(SRC_LST)	\
+SRC_MISC	:= misc/utils.c
+
+ALL_SRCS	:=	malloc.c			\
+				show_alloc_mem.c	\
+				$(SRC_LST)			\
+				$(SRC_MISC)
 
 
 SRCS		:=	$(ALL_SRCS:%=$(SRCS_DIR)/%)
