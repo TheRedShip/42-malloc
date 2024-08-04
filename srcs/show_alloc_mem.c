@@ -20,11 +20,11 @@ void	show_block(t_block *block)
 
 	base_address = (char *)block + (size_t)align_address((void *)sizeof(t_block));
 	if (block->type == 0)
-		ft_printf("TINY : 0x%X (%p)\n", base_address, base_address);
+		ft_printf("TINY : 0x%X\n", base_address);
 	else if (block->type == 1)
-		ft_printf("SMALL : 0x%X (%p)\n", base_address, base_address);
+		ft_printf("SMALL : 0x%X\n", base_address);
 	else
-		ft_printf("LARGE : 0x%X (%p)\n", base_address, base_address);
+		ft_printf("LARGE : 0x%X\n", base_address);
 }
 
 void	show_chunks(t_chunk *chunks, size_t *total)

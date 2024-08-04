@@ -6,16 +6,16 @@
 /*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:10:41 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/04 17:19:15 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/05 01:46:47 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __MALLOC_H__
 # define __MALLOC_H__
 
-#include <stdlib.h>
 #include <sys/mman.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "libft.h"
 
@@ -61,7 +61,8 @@ typedef struct s_block //24 bytes // 32 bytes
 }		t_block;
 
 
-void	*malloc(size_t size);
+void	*mymalloc(size_t size);
+void	myfree(void	*ptr);
 void	show_alloc_mem();
 
 void	*align_address(void *ptr);

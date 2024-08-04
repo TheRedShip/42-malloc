@@ -6,7 +6,7 @@
 #    By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:17:35 by rgramati          #+#    #+#              #
-#    Updated: 2024/08/04 17:00:51 by TheRed           ###   ########.fr        #
+#    Updated: 2024/08/05 01:44:34 by TheRed           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRC_LST		:=	lst/lst_init.c	\
 SRC_MISC	:= misc/utils.c
 
 ALL_SRCS	:=	malloc.c			\
+				free.c				\
 				show_alloc_mem.c	\
 				$(SRC_LST)			\
 				$(SRC_MISC)
