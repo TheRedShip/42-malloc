@@ -51,7 +51,7 @@ t_chunk	*chunk_lstnew(t_size type, t_block *parent)
 	offset = sizeof(t_block);
 	while (temp)
 	{
-		offset += (size_t)align_adress((void *)sizeof(t_chunk)); + (size_t)align_adress((void *)temp->size);
+		offset += (size_t)align_adress((void *)sizeof(t_chunk)) + (size_t)align_adress((void *)temp->size);
 		temp = temp->next;
 	}
 

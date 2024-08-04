@@ -6,7 +6,7 @@
 /*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:09:57 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/04 01:57:31 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/04 02:03:58 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ t_block	*get_using_block(t_size type)
 		i++;
 		using_block = using_block->next;
 	}
-	// if (!using_block)
-		// ft_printf("NEW using block id: %d size left : %u\n", i, type.size - (size_t)align_adress((void *)sizeof(t_block)));
-	// else
-		// ft_printf("using block id: %d size left : %u\n", i, using_block->size_left);
+	if (!using_block)
+		ft_printf("NEW using block id: %d size left : %u\n", i, type.size - (size_t)align_adress((void *)sizeof(t_block)));
+	else
+		ft_printf("using block id: %d size left : %u\n", i, using_block->size_left);
 	return (using_block);
 }
 
