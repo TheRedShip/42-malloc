@@ -6,7 +6,7 @@
 /*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:09:57 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/04 02:03:58 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/04 16:28:29 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,12 @@ t_block	*get_using_block(t_size type)
 	size_t	allocation_cost;
 
 	if (!g_block)
-		block_lstadd_back(&g_block, block_lstnew(type));
+		g_block = block_lstnew(type); //need to check failure
+
 	using_block = g_block;
 	while (using_block)
 	{
-		allocation_cost = (size_t)align_adress((void *)sizeof(t_chunk)) + type.user_size;
+		allocation_cost = (size_t)align_adress((void *)sizeof(t_chunk)) + (size_t)align_adress((void *)type.user_size);
 		if (using_block->type == type.type && allocation_cost <= using_block->size_left)
 			break ;
 		i++;
@@ -84,7 +85,7 @@ void	*heap_allocate(t_size type)
 	new_chunk = chunk_lstnew(type, using_block);
 	chunk_lstadd_back(&using_block->chunks, new_chunk);
 
-	return (new_chunk + sizeof(t_chunk));
+	return (void *)((char *)new_chunk + (size_t)align_adress((void *)sizeof(t_chunk)));
 }
 
 void	*malloc(size_t size)

@@ -6,7 +6,7 @@
 /*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:30:40 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/04 02:03:36 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/04 16:31:50 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,22 @@ void	test_strwrite(char *str, size_t size)
 
 int main(void)
 {
-	for (size_t i = 0; i <= 100; i++)
+
+	for (size_t i = 0; i <= 88; i++)
 	{
-		t_block *ptr = malloc(144);
+		t_block *ptr = malloc(TINY_AUTHORISED_SIZE);
 		if (i % 2 == 0)
 			malloc(1000);
 		test_malloc(ptr);
 	}
 	
+
+	
+	ft_printf("\nstarting strs\n");
 	for (size_t i = 0; i <= 14; i++)
 	{
 		char *ptr = malloc(sizeof(char) * 100);
+		ft_printf("%d ptr: %p\n", i, ptr);
 		test_strwrite(ptr, i);
 	}
 

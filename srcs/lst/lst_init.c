@@ -19,6 +19,8 @@ t_block	*block_lstnew(t_size type)
 	t_block				*ptr;
 	
 	ptr = mmap(NULL, type.size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+	if (ptr == MAP_FAILED)
+		return (NULL);
 	ptr->type = type.type;
 	ptr->size_left = type.size - (size_t)align_adress((void *)sizeof(t_block));
 	ptr->chunks = NULL;
