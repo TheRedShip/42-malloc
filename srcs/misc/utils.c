@@ -24,12 +24,12 @@ t_size	choose_type(size_t size)
 	t_size	type;
 	
 	type.user_size = size;
-	if (size <= TINY_AUTHORISED_SIZE)
+	if (size <= TINY_AUTHORISED_SIZE) // 144
 	{
 		type.size = TINY_SIZE;
 		type.type = TINY;
 	}
-	else if (size <= SMALL_AUTHORISED_SIZE)
+	else if (size <= SMALL_AUTHORISED_SIZE) // 5000
 	{
 		type.size = SMALL_SIZE;
 		type.type = SMALL;
@@ -40,4 +40,18 @@ t_size	choose_type(size_t size)
 		type.type = LARGE;
 	}
 	return (type);
+}
+
+bool	is_all_freed(t_block *block)
+{
+	t_chunk *temp;
+
+	temp = block->chunks;
+	while (temp)
+	{
+		if (!temp->freed)
+			return (false);
+		temp = temp->next;
+	}
+	return (true);
 }

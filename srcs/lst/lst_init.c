@@ -22,9 +22,11 @@ t_block	*block_lstnew(t_size type)
 	if (ptr == MAP_FAILED)
 		return (NULL);
 	ptr->type = type.type;
+	ptr->size = type.size;
 	ptr->size_left = type.size - (size_t)align_address((void *)sizeof(t_block));
 	ptr->chunks = NULL;
 	ptr->next = NULL;
+	ptr->prev = NULL;
 	return (ptr);
 }
 
@@ -41,6 +43,7 @@ void	block_lstadd_back(t_block **lst, t_block *new)
 	}
 	last = block_lstlast(*lst);
 	last->next = new;
+	new->prev = last;
 }
 
 t_chunk	*chunk_lstnew(t_size type, t_block *parent)
@@ -59,7 +62,9 @@ t_chunk	*chunk_lstnew(t_size type, t_block *parent)
 
 	ptr = (t_chunk *)((void *)parent + offset);
 	ptr->size = type.user_size;
+	ptr->freed = false;
 	ptr->next = NULL;
+	ptr->prev = NULL;
 	return (ptr);
 }
 
@@ -76,4 +81,5 @@ void	chunk_lstadd_back(t_chunk **lst, t_chunk *new)
 	}
 	last = chunk_lstlast(*lst);
 	last->next = new;
+	new->prev = last;
 }

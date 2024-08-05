@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
+/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:30:40 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/05 01:49:17 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/05 19:47:01 by ycontre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	test_strwrite(char *str, size_t size)
 void	test_mallocs()
 {
 	ft_printf("starting mallocs : %d * 101 / %d\n", TINY_AUTHORISED_SIZE, TINY_SIZE);
-	for (size_t i = 0; i <= 101; i++)
+	for (size_t i = 0; i <= 1000; i++)
 	{
 		t_block *ptr = malloc(TINY_AUTHORISED_SIZE);
 		test_malloc(ptr);
@@ -45,9 +45,9 @@ void	test_mallocs()
 		test_malloc(ptr);
 	}
 	
-	malloc(TINY_AUTHORISED_SIZE);
-	malloc(SMALL_AUTHORISED_SIZE);
-
+	void *daccordmaisporuquoipas = malloc(TINY_AUTHORISED_SIZE);
+	daccordmaisporuquoipas = malloc(SMALL_AUTHORISED_SIZE);
+	(void) daccordmaisporuquoipas;
 	ft_printf("\nstarting strs\n");
 	for (size_t i = 0; i <= 14; i++)
 	{
@@ -71,10 +71,22 @@ int main(void)
 	// test_mallocs();
 	// show_alloc_mem();
 	
-	void *ptr = mymalloc(42);
-	show_alloc_mem();
+	munmap(NULL, 0);
+	
+	for (int i = 0; i < 1000; i++)
+	{
+		void *ptr = malloc(5);
+		void *ptr2 = malloc(5);
+		void *ptr3 = malloc(5);
 
-	myfree(ptr);
+		(void) ptr;
+		(void) ptr2;
+		(void) ptr3;
+		
+		// free(ptr);
+		// free(ptr2);
+		// free(ptr3);
+	}
 
 	return (0);
 }

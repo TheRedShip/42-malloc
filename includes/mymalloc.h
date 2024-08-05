@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mymalloc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
+/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:10:41 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/05 01:46:47 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/05 19:17:44 by ycontre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define __MALLOC_H__
 
 #include <sys/mman.h>
+#include <stdbool.h>
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -46,27 +47,32 @@ typedef struct s_size
 	size_t				user_size;
 }	t_size;
 
-typedef struct s_chunk //12 bytes // 16 bytes
+typedef struct s_chunk // 32 bytes
 {
-	size_t			size;
-	struct s_chunk	*next;
+	size_t			size; //8
+	bool			freed; //1 mais 8
+	struct s_chunk	*next; //8
+	struct s_chunk	*prev; //32
 }		t_chunk;
 
-typedef struct s_block //24 bytes // 32 bytes
+typedef struct s_block //44 bytes // 48 bytes
 {
 	t_block_size		type;
+	size_t				size;
 	size_t				size_left;
 	t_chunk				*chunks;
 	struct s_block		*next;
+	struct s_block		*prev;
 }		t_block;
 
 
-void	*mymalloc(size_t size);
-void	myfree(void	*ptr);
+void	*malloc(size_t size);
+void	free(void	*ptr);
 void	show_alloc_mem();
 
 void	*align_address(void *ptr);
 t_size	choose_type(size_t size);
+bool	is_all_freed(t_block *block);
 
 t_block	*block_lstnew(t_size type);
 void	block_lstadd_back(t_block **lst, t_block *new);
