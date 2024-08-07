@@ -6,7 +6,7 @@
 /*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:30:40 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/07 02:30:07 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:55:26 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,39 @@ void	test_mallocs()
 		ft_printf("malloc(%d) : %p\n", test_sizes[i], malloc(test_sizes[i]));
 	}
 	ft_printf("\n\n");
-}
-
-int main(void)
-{
-	test_mallocs();
 
 	for (size_t i = 0; i <= 201; i++)
 	{
 		free(ptr[i]);
 	}
 	show_alloc_mem();
+}
+
+void	test_realloc()
+{
+	void *ptr;
+	void *ptr2;
+
+	ptr2 = malloc(100);
+	ptr = malloc(100);
+	ptr = malloc(100);
+	ptr = malloc(100);
+	ptr = malloc(100);
+
+	show_alloc_mem();
+	ft_printf("\n");
+
+	ptr = realloc(ptr, 200);
+	ptr2 = realloc(ptr2, 500);
+
+	show_alloc_mem();
+}
+
+int main(void)
+{
+	// test_mallocs();
+	test_realloc();
+	
 	
 
 	return (0);

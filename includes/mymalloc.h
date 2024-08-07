@@ -6,7 +6,7 @@
 /*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:10:41 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/07 01:57:14 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:50:35 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,15 @@ typedef struct s_block //44 bytes // 48 bytes
 
 
 void	*malloc(size_t size);
+void	*realloc(void *ptr, size_t size);
 void	free(void	*ptr);
 void	show_alloc_mem();
 
 void	*align_address(void *ptr);
 t_size	choose_type(size_t size);
 bool	is_all_freed(t_block *block);
+
+bool	get_block_chunk(void *ptr, t_block **using_block, t_chunk **using_chunk);
 
 t_block	*block_lstnew(t_size type);
 void	block_lstadd_back(t_block **lst, t_block *new);
