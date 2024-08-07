@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:09:57 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/05 18:12:24 by ycontre          ###   ########.fr       */
+/*   Updated: 2024/08/07 02:26:58 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,19 @@ t_block *g_block = NULL;
 
 t_block	*get_using_block(t_size type)
 {
-	int i = 0; // TODO: remove
 	t_block *using_block;
 	size_t	allocation_cost;
 
+	if (type.type == LARGE)
+		return (NULL);
+	
 	if (!g_block)
-		g_block = block_lstnew(type); //need to check failure
+		g_block = block_lstnew(type);
+	if (g_block == MAP_FAILED)
+	{
+		g_block = NULL;
+		return (MAP_FAILED);
+	}
 
 	allocation_cost = (size_t)align_address((void *)sizeof(t_chunk)) + (size_t)align_address((void *)type.user_size);
 	using_block = g_block;
@@ -29,13 +36,8 @@ t_block	*get_using_block(t_size type)
 	{
 		if (using_block->type == type.type && allocation_cost <= using_block->size_left)
 			break ;
-		i++;
 		using_block = using_block->next;
 	}
-	if (!using_block)
-		ft_printf("NEW using block id: %d size left : %u\n", i, type.size - (size_t)align_address((void *)sizeof(t_block)));
-	else
-		ft_printf("using block id: %d size left : %u\n", i, using_block->size_left - allocation_cost);
 	return (using_block);
 }
 
@@ -46,11 +48,16 @@ void	*heap_allocate(t_size type)
 	t_chunk *new_chunk;
 
 	using_block = get_using_block(type);
+	if (using_block == MAP_FAILED)
+		return (NULL);
 	if (!using_block)
 	{
 		using_block = block_lstnew(type);
+		if (using_block == MAP_FAILED)
+			return (NULL);
 		block_lstadd_back(&g_block, using_block);
 	}
+
 	allocation_cost = (size_t)align_address((void *)sizeof(t_chunk)) + (size_t)align_address((void *)type.user_size);
 	using_block->size_left -= allocation_cost;
 	

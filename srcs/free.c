@@ -63,6 +63,9 @@ void	free(void	*ptr)
 	t_block	*block = NULL;
 	t_chunk *chunk = NULL;
 
+	if (!ptr)
+		return ;
+
 	if (!get_block_chunk(ptr, &block, &chunk))
 	{
 		ft_printf("Invalid free\n");

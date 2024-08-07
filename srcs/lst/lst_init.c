@@ -20,7 +20,7 @@ t_block	*block_lstnew(t_size type)
 	
 	ptr = mmap(NULL, type.size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	if (ptr == MAP_FAILED)
-		return (NULL);
+		return (MAP_FAILED);
 	ptr->type = type.type;
 	ptr->size = type.size;
 	ptr->size_left = type.size - (size_t)align_address((void *)sizeof(t_block));

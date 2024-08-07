@@ -36,11 +36,16 @@ void	show_chunks(t_chunk *chunks, size_t *total)
 	chunk = chunks;
 	while (chunk)
 	{
+		if (chunk->freed)
+		{
+			chunk = chunk->next;
+			continue ;
+		}
 		base_address = (char *)chunk + (size_t)align_address((void *)sizeof(t_chunk));
 		end_address = base_address + chunk->size;
 		*total += chunk->size;
 		
-		ft_printf("0x%X - 0x%X : %d bytes\n", base_address, end_address, chunk->size);
+		ft_printf("   0x%X - 0x%X : %d bytes\n", base_address, end_address, chunk->size);
 
 		chunk = chunk->next;
 	}
