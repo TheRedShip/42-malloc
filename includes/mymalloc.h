@@ -6,7 +6,7 @@
 /*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:10:41 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/07 02:50:35 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/07 22:36:20 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ typedef struct s_size
 typedef struct s_chunk // 32 bytes
 {
 	size_t			size; //8
-	bool			freed; //1 mais 8
+	bool			freed; //1 but 8
 	struct s_chunk	*next; //8
-	struct s_chunk	*prev; //32
+	struct s_chunk	*prev; //8
 }		t_chunk;
 
 typedef struct s_block //44 bytes // 48 bytes
@@ -69,6 +69,7 @@ typedef struct s_block //44 bytes // 48 bytes
 void	*malloc(size_t size);
 void	*realloc(void *ptr, size_t size);
 void	free(void	*ptr);
+void	free_all();
 void	show_alloc_mem();
 
 void	*align_address(void *ptr);

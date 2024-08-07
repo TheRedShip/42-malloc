@@ -41,6 +41,7 @@ void	show_chunks(t_chunk *chunks, size_t *total)
 			chunk = chunk->next;
 			continue ;
 		}
+
 		base_address = (char *)chunk + (size_t)align_address((void *)sizeof(t_chunk));
 		end_address = base_address + chunk->size;
 		*total += chunk->size;
@@ -60,8 +61,11 @@ void	show_alloc_mem()
 	temp = g_block;
 	while (temp)
 	{
-		show_block(temp);
-		show_chunks(temp->chunks, &total);
+		if (!is_all_freed(temp))
+		{
+			show_block(temp);
+			show_chunks(temp->chunks, &total);
+		}
 		temp = temp->next;
 	}
 	ft_printf("Total : %d bytes\n", total);

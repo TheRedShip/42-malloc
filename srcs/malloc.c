@@ -6,7 +6,7 @@
 /*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:09:57 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/07 02:26:58 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/07 22:48:05 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,23 @@ t_block	*get_using_block(t_size type)
 	return (using_block);
 }
 
+t_chunk *get_available_chunk(t_block *block, t_size type)
+{
+	t_chunk *chunk;
+
+	chunk = block->chunks;
+	while (chunk)
+	{
+		if (chunk->freed && chunk->size >= type.user_size)
+		{
+			chunk->freed = false;
+			return (chunk);
+		}
+		chunk = chunk->next;
+	}
+	return (chunk);
+}
+
 void	*heap_allocate(t_size type)
 {
 	size_t	allocation_cost;
@@ -61,8 +78,12 @@ void	*heap_allocate(t_size type)
 	allocation_cost = (size_t)align_address((void *)sizeof(t_chunk)) + (size_t)align_address((void *)type.user_size);
 	using_block->size_left -= allocation_cost;
 	
-	new_chunk = chunk_lstnew(type, using_block);
-	chunk_lstadd_back(&using_block->chunks, new_chunk);
+	new_chunk = get_available_chunk(using_block, type);
+	if (!new_chunk)
+	{
+		new_chunk = chunk_lstnew(type, using_block);
+		chunk_lstadd_back(&using_block->chunks, new_chunk);
+	}
 
 	return (void *)((char *)new_chunk + (size_t)align_address((void *)sizeof(t_chunk)));
 }

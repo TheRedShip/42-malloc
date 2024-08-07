@@ -16,14 +16,20 @@ extern t_block	*g_block;
 
 t_block	*block_lstnew(t_size type)
 {
-	t_block				*ptr;
+	size_t	size;
+	t_block	*ptr;
+
+	size = type.size;
+	if (type.type == LARGE)
+		size = (size_t)align_address((void *)sizeof(t_block)) + (size_t)align_address((void *)type.user_size);
 	
-	ptr = mmap(NULL, type.size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+	ft_printf("CALL MMAP %d\n", size);
+	ptr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	if (ptr == MAP_FAILED)
 		return (MAP_FAILED);
 	ptr->type = type.type;
-	ptr->size = type.size;
-	ptr->size_left = type.size - (size_t)align_address((void *)sizeof(t_block));
+	ptr->size = size;
+	ptr->size_left = size - (size_t)align_address((void *)sizeof(t_block));
 	ptr->chunks = NULL;
 	ptr->next = NULL;
 	ptr->prev = NULL;
