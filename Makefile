@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+         #
+#    By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:17:35 by rgramati          #+#    #+#              #
-#    Updated: 2024/08/07 02:50:44 by TheRed           ###   ########.fr        #
+#    Updated: 2024/08/08 13:50:22 by ycontre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,7 @@ OBJS		:=	$(addprefix $(OBJS_DIR)/, $(SRCS:%.c=%.o))
 
 CC          := cc
 
-CFLAGS      := -g -Wall -Wextra -Werror -fPIC
+CFLAGS      := -g -Wextra -Werror -Wall -fPIC
 
 IFLAGS		:= -I $(LFT_DIR)/includes -I includes
 
@@ -106,7 +106,7 @@ $(OBJS_DIR)/%.o: %.c
 	fi \
 
 test:
-	gcc -g -Wextra -Werror -Wall main.c $(IFLAGS) $(LFT) libft_malloc.so -o test
+	gcc -g main.c $(IFLAGS) $(LFT) libft_malloc.so -o test
 
 clean:
 	@$(RM) $(OBJS)

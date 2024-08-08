@@ -21,6 +21,8 @@ void	*realloc(void *ptr, size_t size)
 	t_chunk *using_chunk;
 	size_t	allocation_cost;
 
+	if ((size_t)align_address((void *)size) >= 4294967290)
+		return (NULL);
 	if (!ptr)
 		return (NULL);
 	if (!get_block_chunk(ptr, &using_block, &using_chunk) || using_chunk->freed)
@@ -35,6 +37,7 @@ void	*realloc(void *ptr, size_t size)
 	allocation_cost = (size_t)align_address((void *)sizeof(t_chunk)) + (size_t)align_address((void *)size);
 	if (using_chunk->next == NULL && using_block->size_left >= allocation_cost)
 	{
+		ft_printf("old block size: %u %u %u\n", using_block->size, using_block->size_left);
 		using_chunk->size = size;
 		using_block->size_left -= allocation_cost;
 		return (ptr);

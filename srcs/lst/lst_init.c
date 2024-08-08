@@ -21,9 +21,10 @@ t_block	*block_lstnew(t_size type)
 
 	size = type.size;
 	if (type.type == LARGE)
-		size = (size_t)align_address((void *)sizeof(t_block)) + (size_t)align_address((void *)type.user_size);
-	
-	ft_printf("CALL MMAP %d\n", size);
+		size = (size_t)align_address((void *)sizeof(t_block)) + \
+				(size_t)align_address((void *)sizeof(t_chunk)) + \
+				(size_t)align_address((void *)type.user_size);
+
 	ptr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	if (ptr == MAP_FAILED)
 		return (MAP_FAILED);

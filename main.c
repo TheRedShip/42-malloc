@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
+/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:30:40 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/07 23:06:42 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/08 15:33:55 by ycontre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ void	test_mallocs()
 			test_malloc((void *)ptr[i]);
 	}
 	
-	malloc(TINY_AUTHORISED_SIZE);
-	malloc(SMALL_AUTHORISED_SIZE);
+	void *temp;
+	temp = malloc(TINY_AUTHORISED_SIZE);
+	temp = malloc(SMALL_AUTHORISED_SIZE);
 
 	ft_printf("\nstarting strs\n");
 	for (size_t i = 0; i <= 14; i++)
@@ -61,7 +62,9 @@ void	test_mallocs()
 			test_strwrite(ptr, i);
 	}
 
-	malloc(0);
+	temp = malloc(0);
+
+	(void) temp;
 
 	size_t test_sizes[] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, 1048576};
 	for (size_t i = 0; i < sizeof(test_sizes) / sizeof(test_sizes[0]); i++)
@@ -186,6 +189,6 @@ int main(void)
 	// test_free();
 	// test_page_fault();
 	// test_defrag();
-	
+
 	return (0);
 }

@@ -46,7 +46,7 @@ void	show_chunks(t_chunk *chunks, size_t *total)
 		end_address = base_address + chunk->size;
 		*total += chunk->size;
 		
-		ft_printf("   0x%X - 0x%X : %d bytes\n", base_address, end_address, chunk->size);
+		ft_printf("   0x%X - 0x%X : %u bytes\n", base_address, end_address, chunk->size);
 
 		chunk = chunk->next;
 	}
@@ -68,5 +68,5 @@ void	show_alloc_mem()
 		}
 		temp = temp->next;
 	}
-	ft_printf("Total : %d bytes\n", total);
+	ft_printf("Total : %u bytes\n", total);
 }

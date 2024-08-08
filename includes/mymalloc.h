@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mymalloc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
+/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:10:41 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/07 22:36:20 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/08 15:20:30 by ycontre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 #define TINY_SIZE (size_t)(PAGE_SIZE * 4) // 16384
 #define SMALL_SIZE (size_t)(PAGE_SIZE * 128) // 131072
-#define LARGE_SIZE (size_t)(2147483647)
 
 #define ALIGNED_BLOCK (size_t)(align_address((void *)(sizeof(t_block))))
 #define ALIGNED_CHUNK (size_t)(align_address((void *)(sizeof(t_chunk))))
@@ -68,6 +67,7 @@ typedef struct s_block //44 bytes // 48 bytes
 
 void	*malloc(size_t size);
 void	*realloc(void *ptr, size_t size);
+void	*calloc(size_t count, size_t size);
 void	free(void	*ptr);
 void	free_all();
 void	show_alloc_mem();

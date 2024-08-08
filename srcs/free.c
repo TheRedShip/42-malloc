@@ -43,7 +43,6 @@ void	free_block(t_block *block)
 		next->prev = prev;
 	if (block == g_block)
 		g_block = next;
-	ft_printf("CALL MUNMAP %d\n", block->size);
 	munmap(block, block->size);
 }
 

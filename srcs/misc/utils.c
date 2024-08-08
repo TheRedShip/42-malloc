@@ -36,7 +36,7 @@ t_size	choose_type(size_t size)
 	}
 	else
 	{
-		type.size = LARGE_SIZE;
+		type.size = -1;
 		type.type = LARGE;
 	}
 	return (type);
