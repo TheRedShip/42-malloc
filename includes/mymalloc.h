@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mymalloc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
+/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:10:41 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/10 16:27:31 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/10 22:49:32 by ycontre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@
 #define ALIGNMENT	16
 
 #define TINY_SIZE (size_t)(PAGE_SIZE * 4) // 16384
-#define SMALL_SIZE (size_t)(PAGE_SIZE * 128) // 131072
+#define SMALL_SIZE (size_t)(PAGE_SIZE * 256) // 524288
 
 #define ALIGNED_BLOCK (size_t)(align_address((void *)(sizeof(t_block))))
 #define ALIGNED_CHUNK (size_t)(align_address((void *)(sizeof(t_chunk))))
 
-#define TINY_AUTHORISED_SIZE (size_t)(align_address((void *)(((TINY_SIZE - ALIGNED_BLOCK - ALIGNED_CHUNK * 100) / 100) - ALIGNMENT)))
-#define SMALL_AUTHORISED_SIZE (size_t)(align_address((void *)(((SMALL_SIZE - ALIGNED_BLOCK - ALIGNED_CHUNK * 100) / 100) - ALIGNMENT)))
+#define TINY_AUTHORIZED_SIZE (size_t)(align_address((void *)(((TINY_SIZE - ALIGNED_BLOCK - ALIGNED_CHUNK * 100) / 100) - ALIGNMENT)))
+#define SMALL_AUTHORIZED_SIZE (size_t)(align_address((void *)(((SMALL_SIZE - ALIGNED_BLOCK - ALIGNED_CHUNK * 100) / 100) - ALIGNMENT)))
 
 typedef enum e_env
 {
@@ -59,7 +59,6 @@ typedef struct s_chunk // 32 bytes
 	size_t			size; //8
 	bool			freed; //1 but 8
 	struct s_chunk	*next; //8
-	struct s_chunk	*prev; //8
 }		t_chunk;
 
 typedef struct s_block //44 bytes // 48 bytes
@@ -69,7 +68,6 @@ typedef struct s_block //44 bytes // 48 bytes
 	size_t				size_left;
 	t_chunk				*chunks;
 	struct s_block		*next;
-	struct s_block		*prev;
 }		t_block;
 
 

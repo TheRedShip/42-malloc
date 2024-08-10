@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
+/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:30:40 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/10 16:31:27 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/10 23:05:06 by ycontre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,26 @@ void *ptr[1000000];
 
 void	test_mallocs()
 {
-	ft_printf("starting mallocs : %d * 101 / %d\n", TINY_AUTHORISED_SIZE, TINY_SIZE);
+	ft_printf("starting mallocs : %d * 101 / %d\n", TINY_AUTHORIZED_SIZE, TINY_SIZE);
 	for (size_t i = 0; i <= 101; i++)
 	{
-		ptr[i] = malloc(TINY_AUTHORISED_SIZE);
+		ptr[i] = malloc(TINY_AUTHORIZED_SIZE);
 		if (ptr[i])
 			test_malloc((void *)ptr[i]);
 	}
 
 	ft_printf("\n\n");
-	ft_printf("starting mallocs : %d * 101 / %d\n", SMALL_AUTHORISED_SIZE, SMALL_SIZE);
+	ft_printf("starting mallocs : %d * 101 / %d\n", SMALL_AUTHORIZED_SIZE, SMALL_SIZE);
 	for (size_t i = 102; i < 102 + 100; i++)
 	{
-		ptr[i] = malloc(SMALL_AUTHORISED_SIZE);
+		ptr[i] = malloc(SMALL_AUTHORIZED_SIZE);
 		if (ptr[i])
 			test_malloc((void *)ptr[i]);
 	}
 	
 	void *temp;
-	temp = malloc(TINY_AUTHORISED_SIZE);
-	temp = malloc(SMALL_AUTHORISED_SIZE);
+	temp = malloc(TINY_AUTHORIZED_SIZE);
+	temp = malloc(SMALL_AUTHORIZED_SIZE);
 
 	ft_printf("\nstarting strs\n");
 	for (size_t i = 0; i <= 14; i++)
@@ -159,7 +159,7 @@ void	test_page_fault()
 	void *ptr[100];
 	for (int i = 0; i < 100; i++)
 	{
-		ptr[i] = malloc(SMALL_AUTHORISED_SIZE);
+		ptr[i] = malloc(SMALL_AUTHORIZED_SIZE);
 		test_malloc((t_block *)ptr[i]);
 		free(ptr[i]);
 	}
@@ -169,9 +169,9 @@ void	test_page_fault()
 
 void	test_defrag()
 {
-	void *ptr = malloc(SMALL_AUTHORISED_SIZE);
-	void *ptr2 = malloc(SMALL_AUTHORISED_SIZE);
-	void *ptr3 = malloc(SMALL_AUTHORISED_SIZE);
+	void *ptr = malloc(SMALL_AUTHORIZED_SIZE);
+	void *ptr2 = malloc(SMALL_AUTHORIZED_SIZE);
+	void *ptr3 = malloc(SMALL_AUTHORIZED_SIZE);
 	(void) ptr;
 	(void) ptr2;
 	(void) ptr3;
@@ -195,6 +195,18 @@ void	test_env()
 		ft_printf("%X\n", ptr[i]);
 }
 
+#define malloc(X) ch_debug_malloc(X, __FILE__, __LINE__, __FUNCTION__)
+
+#undef malloc
+
+ch_debug_malloc(size_t size, const char *file, int line, const char *func)
+{
+	void *ptr = malloc(size);
+	
+	
+	return (ptr);
+}
+
 int main(int ac, char **av, char **env)
 {
 	// test_mallocs();
@@ -202,7 +214,19 @@ int main(int ac, char **av, char **env)
 	// test_free();
 	// test_page_fault();
 	// test_defrag();
-	test_env();
+	// test_env();
+	
+	ft_printf("%s\n", __FUNCTION__);
+	// int i;
+	// char *addr;
 
+	// i = 0;
+	// while (i < 1024)
+	// {
+	// 	addr = (char*)malloc(1024);
+	// 	addr[0] = 42;
+	// 	i++;
+	// }
+	// show_alloc_mem();
 	return (0);
 }

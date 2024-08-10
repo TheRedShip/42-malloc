@@ -14,8 +14,8 @@
 
 void	*align_address(void *ptr)
 {
-	if (((size_t)ptr) % ALIGNMENT != 0)
-		ptr += ALIGNMENT - (((size_t)ptr) % ALIGNMENT);
+	if (((size_t)ptr) & (ALIGNMENT - 1))
+		ptr += ALIGNMENT - (((size_t)ptr) & (ALIGNMENT - 1));
 	return (ptr);
 }
 
@@ -24,12 +24,12 @@ t_size	choose_type(size_t size)
 	t_size	type;
 	
 	type.user_size = size;
-	if (size <= TINY_AUTHORISED_SIZE) // 144
+	if (size <= TINY_AUTHORIZED_SIZE) // 144
 	{
 		type.size = TINY_SIZE;
 		type.type = TINY;
 	}
-	else if (size <= SMALL_AUTHORISED_SIZE) // 5000
+	else if (size <= SMALL_AUTHORIZED_SIZE) // 5000
 	{
 		type.size = SMALL_SIZE;
 		type.type = SMALL;
