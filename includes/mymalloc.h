@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mymalloc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:10:41 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/08 15:20:30 by ycontre          ###   ########.fr       */
+/*   Updated: 2024/08/10 16:27:31 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@
 
 #define TINY_AUTHORISED_SIZE (size_t)(align_address((void *)(((TINY_SIZE - ALIGNED_BLOCK - ALIGNED_CHUNK * 100) / 100) - ALIGNMENT)))
 #define SMALL_AUTHORISED_SIZE (size_t)(align_address((void *)(((SMALL_SIZE - ALIGNED_BLOCK - ALIGNED_CHUNK * 100) / 100) - ALIGNMENT)))
+
+typedef enum e_env
+{
+	ENV_STACK_LOGGING = 1 << 0,
+	ENV_PRE_SCRIBBLE = 1 << 1,
+	ENV_SCRIBBLE = 1 << 2,
+	ENV_LOGGING = 1 << 3
+}	t_env;
 
 typedef enum e_block_size
 {
@@ -68,13 +76,14 @@ typedef struct s_block //44 bytes // 48 bytes
 void	*malloc(size_t size);
 void	*realloc(void *ptr, size_t size);
 void	*calloc(size_t count, size_t size);
+void	show_alloc_mem();
 void	free(void	*ptr);
 void	free_all();
-void	show_alloc_mem();
 
 void	*align_address(void *ptr);
 t_size	choose_type(size_t size);
 bool	is_all_freed(t_block *block);
+bool	get_env(t_env env);
 
 bool	get_block_chunk(void *ptr, t_block **using_block, t_chunk **using_chunk);
 

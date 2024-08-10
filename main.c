@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:30:40 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/08 15:33:55 by ycontre          ###   ########.fr       */
+/*   Updated: 2024/08/10 16:31:27 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,13 +182,27 @@ void	test_defrag()
 	show_alloc_mem();
 }
 
-int main(void)
+void	test_env()
+{
+	//need to setup env variables : MyMallocPreScribble
+	char *ptr = malloc(15);
+	for (int i = 0; i < 15; i++)
+		ft_printf("%X\n", ptr[i]);
+
+	//need to setup env variables : MyMallocScribble
+	free(ptr);
+	for (int i = 0; i < 15; i++)
+		ft_printf("%X\n", ptr[i]);
+}
+
+int main(int ac, char **av, char **env)
 {
 	// test_mallocs();
 	// test_realloc();
 	// test_free();
 	// test_page_fault();
 	// test_defrag();
+	test_env();
 
 	return (0);
 }

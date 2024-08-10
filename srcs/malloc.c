@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:09:57 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/08 15:24:48 by ycontre          ###   ########.fr       */
+/*   Updated: 2024/08/10 16:29:02 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,12 @@ void	*heap_allocate(t_size type)
 
 void	*malloc(size_t size)
 {
+	void	*ptr;
 	t_size	type;
 
 	type = choose_type(size);
-	return (heap_allocate(type));
+	ptr = heap_allocate(type);
+	if (get_env(ENV_PRE_SCRIBBLE))
+		ft_memset(ptr, 0xAA, size);
+	return (ptr);
 }

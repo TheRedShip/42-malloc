@@ -98,6 +98,9 @@ void	free(void	*ptr)
 	allocation_cost = (size_t)align_address((void *)sizeof(t_chunk)) + (size_t)align_address((void *)chunk->size);
 	block->size_left += allocation_cost;
 	chunk->freed = true;
+	
+	if (get_env(ENV_SCRIBBLE))
+		ft_memset(ptr, 0x55, chunk->size);
 
 	if (chunk->prev && chunk->prev->freed)
 	{

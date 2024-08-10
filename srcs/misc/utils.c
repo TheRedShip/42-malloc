@@ -55,3 +55,23 @@ bool	is_all_freed(t_block *block)
 	}
 	return (true);
 }
+
+bool	get_env(t_env env)
+{
+	static unsigned int	env_cache = 0;
+	static bool			init = false;
+
+	if (!init)
+	{
+		if (getenv("MyMallocStackLogging"))
+			env_cache |= ENV_STACK_LOGGING;
+		if (getenv("MyMallocFullLogging"))
+			env_cache |= ENV_LOGGING;
+		if (getenv("MyMallocPreScribble"))
+			env_cache |= ENV_PRE_SCRIBBLE;
+		if (getenv("MyMallocScribble"))
+			env_cache |= ENV_SCRIBBLE;
+		init = true;
+	}
+	return (env_cache & env);
+}

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+         #
+#    By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:17:35 by rgramati          #+#    #+#              #
-#    Updated: 2024/08/08 13:50:22 by ycontre          ###   ########.fr        #
+#    Updated: 2024/08/10 16:01:15 by TheRed           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SRC_MISC	:=	misc/utils.c	\
 
 ALL_SRCS	:=	malloc.c			\
 				realloc.c			\
+				calloc.c			\
 				free.c				\
 				show_alloc_mem.c	\
 				$(SRC_LST)			\
