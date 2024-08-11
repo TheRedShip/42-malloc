@@ -70,3 +70,76 @@ void	show_alloc_mem()
 	}
 	ft_printf("Total : %u bytes\n", total);
 }
+
+void	print_address(unsigned nb, int depth)
+{
+	if (nb >= 16)
+		print_address(nb / 16, depth + 1);
+	else if (depth == 0)
+		ft_printf("0");
+	if (depth < 2)
+		ft_putchar_fd(1, "0123456789ABCDEF"[nb % 16]);
+}
+
+void	show_chunk_ex(t_chunk *chunk, size_t *bytes)
+{
+	char	*base_address;
+
+	for (size_t i = 0; i < (chunk->size / 16) + (chunk->size % 16 != 0) + 1; i++)
+	{
+		size_t	num = *bytes;
+		size_t	size = 0;
+		while (num >= 16)
+		{
+			num /= 16;
+			size++;
+		}
+		for (size_t i = 0; i < 7 - size; i++)
+			write(1, "0", 1);
+		ft_printf("%X", *bytes);
+
+		for (size_t j = 0; j < 16; j+=2)
+		{
+			size_t	offset = i * 16 + j;
+			if (offset >= chunk->size)
+				break;
+			if (j % 2 == 0)
+				write(1, " ", 1);
+
+			base_address = (char *)chunk + (size_t)align_address((void *)sizeof(t_chunk));
+			print_address(base_address[offset + 1], 0);
+			print_address(base_address[offset], 0);
+			
+			*bytes += base_address[offset + 1] != 0;
+			*bytes += base_address[offset] != 0;
+		}
+		write(1, "\n", 1);
+	}
+}
+
+void	show_alloc_mem_ex()
+{
+	t_chunk *chunk;
+	t_block *temp;
+	size_t	bytes;
+	size_t	total;
+
+	bytes = 0;
+	total = 0;
+	temp = g_block;
+	while (temp)
+	{
+		if (!is_all_freed(temp))
+		{
+			chunk = temp->chunks;
+			while (chunk && !chunk->freed)
+			{
+				show_chunk_ex(chunk, &bytes);
+				total += chunk->size;
+				chunk = chunk->next;
+			}
+		}
+		temp = temp->next;
+	}
+	ft_printf("Total : %u bytes\n", total);
+}

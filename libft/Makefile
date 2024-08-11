@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+         #
+#    By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:17:35 by rgramati          #+#    #+#              #
-#    Updated: 2024/08/01 13:43:14 by ycontre          ###   ########.fr        #
+#    Updated: 2024/08/11 17:08:14 by TheRed           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ SRC_MEM		:=	memory/ft_bzero.c 					\
 SRC_PRINT	:=	stdout/ft_displays.c				\
 				stdout/ft_putendl_fd.c				\
 				stdout/ft_itoa.c					\
+				stdout/ft_itoa_base.c				\
 				stdout/ft_dprintf.c
 
 # STRING

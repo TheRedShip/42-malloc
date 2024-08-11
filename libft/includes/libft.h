@@ -6,7 +6,7 @@
 /*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:16:25 by rgramati          #+#    #+#             */
-/*   Updated: 2024/08/10 15:48:06 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/11 17:07:20 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
+# include <stdbool.h>
 
 /* STRUCTS ****************************************************************** */
 
@@ -156,6 +157,7 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	**ft_split(char *s, char c);
 char	*ft_strtrim(char *s1, char *set);
 char	*ft_itoa(int n);
+void	ft_itoa_base(size_t nb, char base, char length, bool prefix);
 int		ft_strcspn(char *s, char *rejects);
 char	*ft_strtok(char *str, char *token);
 int		ft_wc(char *str, char delim);

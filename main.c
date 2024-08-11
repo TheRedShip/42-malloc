@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:30:40 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/10 23:05:06 by ycontre          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:29:18 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,18 +195,6 @@ void	test_env()
 		ft_printf("%X\n", ptr[i]);
 }
 
-#define malloc(X) ch_debug_malloc(X, __FILE__, __LINE__, __FUNCTION__)
-
-#undef malloc
-
-ch_debug_malloc(size_t size, const char *file, int line, const char *func)
-{
-	void *ptr = malloc(size);
-	
-	
-	return (ptr);
-}
-
 int main(int ac, char **av, char **env)
 {
 	// test_mallocs();
@@ -216,17 +204,13 @@ int main(int ac, char **av, char **env)
 	// test_defrag();
 	// test_env();
 	
-	ft_printf("%s\n", __FUNCTION__);
-	// int i;
-	// char *addr;
+	char cpy[] = "salut toi ca va et toi mon coeur00salut toi ca va et toi mon coeur00salut toi ca va et toi mon coeur00salut toi ca va et toi mon coeur00salut toi ca va et toi mon coeur00salut toi ca va et toi mon coeur00salut toi ca va et toi mon coeur00salut toi ca va et toi mon coeur00";
+	char *str = malloc(sizeof(char) * ft_strlen(cpy) + 1);
+	ft_strcat(str, cpy);
+	
 
-	// i = 0;
-	// while (i < 1024)
-	// {
-	// 	addr = (char*)malloc(1024);
-	// 	addr[0] = 42;
-	// 	i++;
-	// }
-	// show_alloc_mem();
+	show_alloc_mem();
+	ft_printf("\n");
+	show_alloc_mem_ex();
 	return (0);
 }

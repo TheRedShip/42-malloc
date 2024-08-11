@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mymalloc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:10:41 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/10 22:49:32 by ycontre          ###   ########.fr       */
+/*   Updated: 2024/08/11 16:36:09 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef enum e_env
 	ENV_STACK_LOGGING = 1 << 0,
 	ENV_PRE_SCRIBBLE = 1 << 1,
 	ENV_SCRIBBLE = 1 << 2,
-	ENV_LOGGING = 1 << 3
 }	t_env;
 
 typedef enum e_block_size
@@ -59,6 +58,7 @@ typedef struct s_chunk // 32 bytes
 	size_t			size; //8
 	bool			freed; //1 but 8
 	struct s_chunk	*next; //8
+	struct s_chunk	*prev;
 }		t_chunk;
 
 typedef struct s_block //44 bytes // 48 bytes
@@ -68,15 +68,17 @@ typedef struct s_block //44 bytes // 48 bytes
 	size_t				size_left;
 	t_chunk				*chunks;
 	struct s_block		*next;
+	struct s_block		*prev;
 }		t_block;
 
 
 void	*malloc(size_t size);
 void	*realloc(void *ptr, size_t size);
 void	*calloc(size_t count, size_t size);
-void	show_alloc_mem();
 void	free(void	*ptr);
 void	free_all();
+void	show_alloc_mem();
+void	show_alloc_mem_ex();
 
 void	*align_address(void *ptr);
 t_size	choose_type(size_t size);

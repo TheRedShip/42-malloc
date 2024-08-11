@@ -24,12 +24,12 @@ t_size	choose_type(size_t size)
 	t_size	type;
 	
 	type.user_size = size;
-	if (size <= TINY_AUTHORIZED_SIZE) // 144
+	if (size <= TINY_AUTHORIZED_SIZE)
 	{
 		type.size = TINY_SIZE;
 		type.type = TINY;
 	}
-	else if (size <= SMALL_AUTHORIZED_SIZE) // 5000
+	else if (size <= SMALL_AUTHORIZED_SIZE)
 	{
 		type.size = SMALL_SIZE;
 		type.type = SMALL;
@@ -65,8 +65,6 @@ bool	get_env(t_env env)
 	{
 		if (getenv("MyMallocStackLogging"))
 			env_cache |= ENV_STACK_LOGGING;
-		if (getenv("MyMallocFullLogging"))
-			env_cache |= ENV_LOGGING;
 		if (getenv("MyMallocPreScribble"))
 			env_cache |= ENV_PRE_SCRIBBLE;
 		if (getenv("MyMallocScribble"))
