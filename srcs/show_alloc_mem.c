@@ -117,29 +117,45 @@ void	show_chunk_ex(t_chunk *chunk, size_t *bytes)
 	}
 }
 
+void	get_chunks_bytes(char *buf, bool reset)
+{
+	static t_block	*block;
+	static t_chunk	*chunk;
+	static size_t	offset = 0;
+	char			*addr;
+	size_t			i;
+
+	if (reset)
+	{
+		block = g_block;
+		chunk = block->chunks;
+		offset = 0;
+	}
+	i = 0;
+	while (block)
+	{
+		while (chunk)
+		{
+			addr = (char *)chunk + (size_t)align_address((void *)sizeof(t_chunk));
+			while (offset < chunk->size)
+			{
+				if (i == 16)
+					return ;
+				buf[i] = addr[offset];
+				offset++;
+				i++;
+			}
+			buf[i] = '\0';
+			offset = 0;
+			chunk = chunk->next;
+		}
+		block = block->next;
+		if (block)
+			chunk = block->chunks;
+	}
+}
+
 void	show_alloc_mem_ex()
 {
-	t_chunk *chunk;
-	t_block *temp;
-	size_t	bytes;
-	size_t	total;
-
-	bytes = 0;
-	total = 0;
-	temp = g_block;
-	while (temp)
-	{
-		if (!is_all_freed(temp))
-		{
-			chunk = temp->chunks;
-			while (chunk && !chunk->freed)
-			{
-				show_chunk_ex(chunk, &bytes);
-				total += chunk->size;
-				chunk = chunk->next;
-			}
-		}
-		temp = temp->next;
-	}
-	ft_printf("Total : %u bytes\n", total);
+	
 }

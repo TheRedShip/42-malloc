@@ -6,7 +6,7 @@
 /*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:30:40 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/11 18:29:18 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/11 22:22:05 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,9 +204,13 @@ int main(int ac, char **av, char **env)
 	// test_defrag();
 	// test_env();
 	
-	char cpy[] = "salut toi ca va et toi mon coeur00salut toi ca va et toi mon coeur00salut toi ca va et toi mon coeur00salut toi ca va et toi mon coeur00salut toi ca va et toi mon coeur00salut toi ca va et toi mon coeur00salut toi ca va et toi mon coeur00salut toi ca va et toi mon coeur00";
+	char cpy[] = "salut toi ca va et toi mon coeur";
 	char *str = malloc(sizeof(char) * ft_strlen(cpy) + 1);
 	ft_strcat(str, cpy);
+
+	char cpy2[] = "oui ca va superrrrr ;--)";
+	str = malloc(sizeof(char) * ft_strlen(cpy2) + 1);
+	ft_strcat(str, cpy2);
 	
 
 	show_alloc_mem();
