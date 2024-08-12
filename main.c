@@ -6,7 +6,7 @@
 /*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:30:40 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/11 22:22:05 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/12 16:25:18 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,15 +195,8 @@ void	test_env()
 		ft_printf("%X\n", ptr[i]);
 }
 
-int main(int ac, char **av, char **env)
+void	test_mem_ex()
 {
-	// test_mallocs();
-	// test_realloc();
-	// test_free();
-	// test_page_fault();
-	// test_defrag();
-	// test_env();
-	
 	char cpy[] = "salut toi ca va et toi mon coeur";
 	char *str = malloc(sizeof(char) * ft_strlen(cpy) + 1);
 	ft_strcat(str, cpy);
@@ -216,5 +209,34 @@ int main(int ac, char **av, char **env)
 	show_alloc_mem();
 	ft_printf("\n");
 	show_alloc_mem_ex();
+
+	free_all();
+	ft_printf("FREE ALL\n");
+
+	void *ptr = malloc(100);
+	test_malloc(ptr);
+	show_alloc_mem_ex();
+
+	free(ptr);
+	
+	show_alloc_mem_ex();
+
+	void *new_ptr = malloc(15);
+	ft_strlcpy(new_ptr, "salut", ft_strlen("salut") + 1);
+	
+	show_alloc_mem_ex();
+}
+
+int main(int ac, char **av, char **env)
+{
+	// test_mallocs();
+	// test_realloc();
+	// test_free();
+	// test_page_fault();
+	// test_defrag();
+	// test_env();
+	test_mem_ex();
+	
+	
 	return (0);
 }

@@ -117,21 +117,23 @@ void	show_chunk_ex(t_chunk *chunk, size_t *bytes)
 	}
 }
 
-void	get_chunks_bytes(char *buf, bool reset)
+size_t	get_chunks_bytes(char *buf, bool reset)
 {
-	static t_block	*block;
-	static t_chunk	*chunk;
+	static t_block	*block = NULL;
+	static t_chunk	*chunk = NULL;
 	static size_t	offset = 0;
-	char			*addr;
-	size_t			i;
+	char			*addr = NULL;
+	size_t			i = 0;
 
+	if (!g_block)
+		return (0);
 	if (reset)
 	{
 		block = g_block;
 		chunk = block->chunks;
 		offset = 0;
+		return (0);
 	}
-	i = 0;
 	while (block)
 	{
 		while (chunk)
@@ -140,12 +142,11 @@ void	get_chunks_bytes(char *buf, bool reset)
 			while (offset < chunk->size)
 			{
 				if (i == 16)
-					return ;
+					return (i);
 				buf[i] = addr[offset];
 				offset++;
 				i++;
 			}
-			buf[i] = '\0';
 			offset = 0;
 			chunk = chunk->next;
 		}
@@ -153,9 +154,64 @@ void	get_chunks_bytes(char *buf, bool reset)
 		if (block)
 			chunk = block->chunks;
 	}
+	return (i);
+}
+
+void	print_header_line(size_t bytes)
+{
+	size_t	num;
+	size_t	size;
+
+	num = 16;
+	size = 0;
+	while (num <= bytes && ++size > 0)
+		num *= 16;
+	while (7 - size++ != 0)
+		write(1, "0", 1);
+	ft_printf("%X  ", bytes);
 }
 
 void	show_alloc_mem_ex()
 {
-	
+	char	buf[16];
+	size_t	bytes;
+	size_t	ret;
+
+	bytes = 0;
+	get_chunks_bytes(NULL, true);
+	while ((ret = get_chunks_bytes(buf, false)))
+	{
+		print_header_line(bytes);
+
+		for (size_t i = 0; i < ret; i++)
+		{
+			if (i == 8)
+				write(1, " ", 1);
+			print_address(buf[i], 0);
+			write(1, " ", 1);
+		}
+		for (size_t i = ret; i < 16; i++)
+		{
+			if (i == 8)
+				write(1, " ", 1);
+			write(1, "   ", 3);
+		}
+
+		write(1, "|", 1);
+		for (size_t i = 0; i < ret; i++)
+		{
+			if (ft_is_printable(buf[i]))
+				ft_putchar_fd(1, buf[i]);
+			else
+				write(1, ".", 1);
+		}
+		write(1, "|\n", 2);
+
+		bytes += ret;
+	}
+	if (bytes)
+	{
+		print_header_line(bytes);
+		write(1, "\n", 1);
+	}
 }
