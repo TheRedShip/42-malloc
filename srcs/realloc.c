@@ -22,37 +22,39 @@ void	*realloc(void *ptr, size_t size)
 	t_chunk *using_chunk;
 	size_t	allocation_cost;
 
-	pthread_mutex_lock(&g_malloc_mutex);
+	if ((size_t)align_address((void *)size) >= 4294967290 || !ptr)
+		return (NULL);
 
-	if ((size_t)align_address((void *)size) >= 4294967290)
-		return (NULL);
-	if (!ptr)
-		return (NULL);
+	pthread_mutex_lock(&g_malloc_mutex);
 	if (!get_block_chunk(ptr, &using_block, &using_chunk) || using_chunk->freed)
 	{
+		pthread_mutex_unlock(&g_malloc_mutex);
 		ft_printf("realloc: Invalid address\n");
 		exit(1);
 	}
 
 	if (using_chunk->size == size)
+	{
+		pthread_mutex_unlock(&g_malloc_mutex);
 		return (ptr);
-	
+	}
+
 	allocation_cost = (size_t)align_address((void *)sizeof(t_chunk)) + (size_t)align_address((void *)size);
 	if (using_chunk->next == NULL && using_block->size_left >= allocation_cost)
 	{
-		ft_printf("old block size: %u %u %u\n", using_block->size, using_block->size_left);
 		using_chunk->size = size;
 		using_block->size_left -= allocation_cost;
+		if (getenv("MyMallocPreScribble"))
+			ft_memset(ptr, 0xaa, size);
+
+		pthread_mutex_unlock(&g_malloc_mutex);
 		return (ptr);
 	}
-	else
-	{
-		new_ptr = malloc(size);
-		if (!new_ptr)
-			return (NULL);
-		ft_memcpy(new_ptr, ptr, using_chunk->size);
-		free(ptr);
-	}
 	pthread_mutex_unlock(&g_malloc_mutex);
+	new_ptr = malloc(size);
+	if (!new_ptr)
+		return (NULL);
+	ft_memcpy(new_ptr, ptr, using_chunk->size);
+	free(ptr);
 	return (new_ptr);
 }

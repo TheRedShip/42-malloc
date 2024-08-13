@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
+/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:30:40 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/13 13:49:03 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/13 18:23:04 by ycontre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,14 +229,14 @@ void	test_mem_ex()
 
 int main(int ac, char **av, char **env)
 {
-	// test_mallocs();
+	test_mallocs();
 	// test_realloc();
 	// test_free();
 	// test_page_fault();
 	// test_defrag();
 	// test_env();
-	test_mem_ex();
-	
+	// test_mem_ex();
+	show_alloc_mem_ex();
 	
 	return (0);
 }
