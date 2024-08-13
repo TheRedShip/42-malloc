@@ -12,7 +12,8 @@
 
 #include "mymalloc.h"
 
-extern t_block	*g_block;
+extern t_block			*g_block;
+extern pthread_mutex_t	g_malloc_mutex;
 
 void	show_block(t_block *block)
 {
@@ -57,6 +58,8 @@ void	show_alloc_mem()
 	t_block	*temp;
 	size_t	total;
 
+	pthread_mutex_lock(&g_malloc_mutex);
+
 	total = 0;
 	temp = g_block;
 	while (temp)
@@ -69,6 +72,7 @@ void	show_alloc_mem()
 		temp = temp->next;
 	}
 	ft_printf("Total : %u bytes\n", total);
+	pthread_mutex_unlock(&g_malloc_mutex);
 }
 
 void	print_address(unsigned nb, int depth)
@@ -177,6 +181,7 @@ void	show_alloc_mem_ex()
 	size_t	bytes;
 	size_t	ret;
 
+	pthread_mutex_lock(&g_malloc_mutex);
 	bytes = 0;
 	get_chunks_bytes(NULL, true);
 	while ((ret = get_chunks_bytes(buf, false)))
@@ -214,4 +219,5 @@ void	show_alloc_mem_ex()
 		print_header_line(bytes);
 		write(1, "\n", 1);
 	}
+	pthread_mutex_unlock(&g_malloc_mutex);
 }

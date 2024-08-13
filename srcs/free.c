@@ -12,7 +12,8 @@
 
 #include "mymalloc.h"
 
-extern t_block	*g_block;
+extern t_block			*g_block;
+extern pthread_mutex_t	g_malloc_mutex;
 
 void	free_all()
 {
@@ -81,6 +82,8 @@ void	free(void	*ptr)
 	t_block	*block = NULL;
 	t_chunk *chunk = NULL;
 
+	pthread_mutex_lock(&g_malloc_mutex);
+
 	if (!ptr)
 		return ;
 
@@ -112,4 +115,5 @@ void	free(void	*ptr)
 
 	if (is_all_freed(block) && is_valid_block(block))
 		free_block(block);
+	pthread_mutex_unlock(&g_malloc_mutex);
 }

@@ -6,7 +6,7 @@
 #    By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:17:35 by rgramati          #+#    #+#              #
-#    Updated: 2024/08/10 16:01:15 by TheRed           ###   ########.fr        #
+#    Updated: 2024/08/13 13:52:39 by TheRed           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ OBJS		:=	$(addprefix $(OBJS_DIR)/, $(SRCS:%.c=%.o))
 
 CC          := cc
 
-CFLAGS      := -g -Wextra -Werror -Wall -fPIC
+CFLAGS      := -g -p -Wextra -Werror -Wall -fPIC
 
 IFLAGS		:= -I $(LFT_DIR)/includes -I includes
 

@@ -6,13 +6,14 @@
 /*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:09:57 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/11 16:59:15 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/13 13:55:28 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mymalloc.h"
 
-t_block *g_block = NULL;
+t_block				*g_block = NULL;
+pthread_mutex_t		g_malloc_mutex;
 
 t_block	*get_using_block(t_size type)
 {
@@ -93,9 +94,13 @@ void	*malloc(size_t size)
 	void	*ptr;
 	t_size	type;
 
+	pthread_mutex_lock(&g_malloc_mutex);
+
 	type = choose_type(size);
 	ptr = heap_allocate(type);
 	if (get_env(ENV_PRE_SCRIBBLE))
 		ft_memset(ptr, 0xAA, size);
+
+	pthread_mutex_unlock(&g_malloc_mutex);
 	return (ptr);
 }

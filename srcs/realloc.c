@@ -12,7 +12,8 @@
 
 #include "mymalloc.h"
 
-extern t_block	*g_block;
+extern t_block			*g_block;
+extern pthread_mutex_t	g_malloc_mutex;
 
 void	*realloc(void *ptr, size_t size)
 {
@@ -20,6 +21,8 @@ void	*realloc(void *ptr, size_t size)
 	t_block	*using_block;
 	t_chunk *using_chunk;
 	size_t	allocation_cost;
+
+	pthread_mutex_lock(&g_malloc_mutex);
 
 	if ((size_t)align_address((void *)size) >= 4294967290)
 		return (NULL);
@@ -50,5 +53,6 @@ void	*realloc(void *ptr, size_t size)
 		ft_memcpy(new_ptr, ptr, using_chunk->size);
 		free(ptr);
 	}
+	pthread_mutex_unlock(&g_malloc_mutex);
 	return (new_ptr);
 }
