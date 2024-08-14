@@ -15,6 +15,8 @@
 extern t_block			*g_block;
 extern pthread_mutex_t	g_malloc_mutex;
 
+void	free_all() __attribute__((destructor));
+
 void	free_all()
 {
 	t_block	*block;
@@ -82,20 +84,23 @@ void	free(void	*ptr)
 	t_block	*block = NULL;
 	t_chunk *chunk = NULL;
 
-	pthread_mutex_lock(&g_malloc_mutex);
-
 	if (!ptr)
 		return ;
 
+	pthread_mutex_lock(&g_malloc_mutex);
 	if (!get_block_chunk(ptr, &block, &chunk))
 	{
-		ft_printf("Invalid free\n");
-		exit(1);
+		ft_dprintf(2, "free(): invalid pointer\n");
+		// exit(1);
+		pthread_mutex_unlock(&g_malloc_mutex);
+		return ;
 	}
 	if (chunk->freed)
 	{
-		ft_printf("Double free\n");
-		exit(1);
+		ft_dprintf(2, "free(): invalid pointer\n");
+		// exit(1);
+		pthread_mutex_unlock(&g_malloc_mutex);
+		return ;
 	}
 
 	allocation_cost = (size_t)align_address((void *)sizeof(t_chunk)) + (size_t)align_address((void *)chunk->size);

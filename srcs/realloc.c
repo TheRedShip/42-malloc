@@ -29,8 +29,8 @@ void	*realloc(void *ptr, size_t size)
 	if (!get_block_chunk(ptr, &using_block, &using_chunk) || using_chunk->freed)
 	{
 		pthread_mutex_unlock(&g_malloc_mutex);
-		ft_printf("realloc: Invalid address\n");
-		exit(1);
+		ft_dprintf(2, "realloc(): invalid pointer\n");
+		return (NULL);
 	}
 
 	if (using_chunk->size == size)

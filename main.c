@@ -6,7 +6,7 @@
 /*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:30:40 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/13 18:23:04 by ycontre          ###   ########.fr       */
+/*   Updated: 2024/08/14 16:45:49 by ycontre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,16 +227,22 @@ void	test_mem_ex()
 	show_alloc_mem_ex();
 }
 
+void print(char *s)
+{
+	write(1, s, strlen(s));
+}
+
 int main(int ac, char **av, char **env)
 {
-	test_mallocs();
+	// test_mallocs();
 	// test_realloc();
 	// test_free();
 	// test_page_fault();
 	// test_defrag();
 	// test_env();
 	// test_mem_ex();
-	show_alloc_mem_ex();
+	// show_alloc_mem_ex();
+	
 	
 	return (0);
 }
