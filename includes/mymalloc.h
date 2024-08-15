@@ -6,7 +6,7 @@
 /*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:10:41 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/13 13:53:09 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/15 12:47:51 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 #include <sys/mman.h>
 #include <stdbool.h>
+#include <pthread.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <pthread.h>
+#include <stdio.h>
+#include <fcntl.h>
 
 #include "libft.h"
 
@@ -73,13 +75,24 @@ typedef struct s_block //44 bytes // 48 bytes
 }		t_block;
 
 
-void	*malloc(size_t size);
-void	*realloc(void *ptr, size_t size);
-void	*calloc(size_t count, size_t size);
-void	free(void	*ptr);
+void						log_debug(const char *file, int line, const char *function, const char *format, ...);
+#define log(format, ...)	log_debug(__FILE__, __LINE__, __FUNCTION__, format, ##__VA_ARGS__)
+
+void	*_malloc(size_t size);
+void	*_realloc(void *ptr, size_t size);
+void	*_calloc(size_t count, size_t size);
+void	_free(void	*ptr);
+
+#define malloc(X) _malloc(X)
+#define realloc(X, Y) _realloc(X, Y)
+#define calloc(X, Y) _calloc(X, Y)
+#define free(X) _free(X)
+
 void	free_all();
 void	show_alloc_mem();
 void	show_alloc_mem_ex();
+
+
 
 void	*align_address(void *ptr);
 t_size	choose_type(size_t size);

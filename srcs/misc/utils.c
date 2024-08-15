@@ -39,6 +39,7 @@ t_size	choose_type(size_t size)
 		type.size = -1;
 		type.type = LARGE;
 	}
+	log("Trying to allocate %u bytes (block %u)", size, type.size);
 	return (type);
 }
 
@@ -72,4 +73,34 @@ bool	get_env(t_env env)
 		init = true;
 	}
 	return (env_cache & env);
+}
+
+#undef malloc
+#undef realloc
+#undef free
+#undef calloc
+
+void log_debug(const char *file, int line, const char *function, const char *format, ...)
+{
+    static bool init = false;
+    const char *mode = init ? "a" : "w";
+    init = true;
+
+	if (!get_env(ENV_STACK_LOGGING))
+		return ;
+
+    FILE *fd = fopen("malloc.log", mode);
+    if (!fd)
+        return;
+
+    fprintf(fd, "%s:%d %s() ", file, line, function);
+
+    va_list args;
+    va_start(args, format);
+    vfprintf(fd, format, args);
+    va_end(args);
+
+    fprintf(fd, "\n");
+
+    fclose(fd);
 }

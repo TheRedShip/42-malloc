@@ -38,6 +38,8 @@ void	free_block(t_block *block)
 	t_block	*prev;
 	t_block	*next;
 
+	log("Freeing block %p of size %u bytes", block, block->size);
+
 	prev = block->prev;
 	next = block->next;
 	if (prev)
@@ -71,6 +73,8 @@ bool	is_valid_block(t_block *block)
 
 void	merge_chunk(t_chunk *chunk, t_chunk *next_chunk)
 {
+	log("Freed defragmentation of %p and %p", chunk, next_chunk);
+
 	chunk->next = next_chunk->next;
 	if (next_chunk->next)
 		next_chunk->next->prev = chunk;
@@ -78,27 +82,21 @@ void	merge_chunk(t_chunk *chunk, t_chunk *next_chunk)
 	chunk->size += next_chunk->size + (size_t)align_address((void *)sizeof(t_chunk));
 }
 
-void	free(void	*ptr)
+void	_free(void	*ptr)
 {
 	size_t	allocation_cost;
 	t_block	*block = NULL;
 	t_chunk *chunk = NULL;
 
+	pthread_mutex_lock(&g_malloc_mutex);
+
+	log("Trying to free %p", ptr);
 	if (!ptr)
 		return ;
 
-	pthread_mutex_lock(&g_malloc_mutex);
-	if (!get_block_chunk(ptr, &block, &chunk))
+	if (!get_block_chunk(ptr, &block, &chunk) || chunk->freed)
 	{
 		ft_dprintf(2, "free(): invalid pointer\n");
-		// exit(1);
-		pthread_mutex_unlock(&g_malloc_mutex);
-		return ;
-	}
-	if (chunk->freed)
-	{
-		ft_dprintf(2, "free(): invalid pointer\n");
-		// exit(1);
 		pthread_mutex_unlock(&g_malloc_mutex);
 		return ;
 	}
@@ -108,8 +106,10 @@ void	free(void	*ptr)
 	chunk->freed = true;
 	
 	if (get_env(ENV_SCRIBBLE))
+	{
 		ft_memset(ptr, 0x55, chunk->size);
-
+		log("EnvScribble Detected setting %p to 0x55", ptr);
+	}
 	if (chunk->prev && chunk->prev->freed)
 	{
 		merge_chunk(chunk->prev, chunk);
@@ -120,5 +120,7 @@ void	free(void	*ptr)
 
 	if (is_all_freed(block) && is_valid_block(block))
 		free_block(block);
+	else
+		log("Chunk %p from ptr %p is set to free\n", chunk, ptr);
 	pthread_mutex_unlock(&g_malloc_mutex);
 }

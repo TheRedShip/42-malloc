@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:33:15 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/14 16:18:04 by ycontre          ###   ########.fr       */
+/*   Updated: 2024/08/15 12:03:51 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern pthread_mutex_t	g_malloc_mutex;
 
-void	*calloc(size_t count, size_t size)
+void	*_calloc(size_t count, size_t size)
 {
 	return (ft_calloc(count, size));
 }

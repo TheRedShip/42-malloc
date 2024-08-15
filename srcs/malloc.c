@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:09:57 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/14 16:44:23 by ycontre          ###   ########.fr       */
+/*   Updated: 2024/08/15 12:56:04 by TheRed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mymalloc.h"
+
+#ifdef malloc
+	#undef malloc
+#endif
 
 t_block				*g_block = NULL;
 pthread_mutex_t		g_malloc_mutex;
@@ -39,6 +43,8 @@ t_block	*get_using_block(t_size type)
 			break ;
 		using_block = using_block->next;
 	}
+	if (using_block)
+		log("Using block %p size left %u", using_block, using_block->size_left);
 	return (using_block);
 }
 
@@ -51,11 +57,14 @@ t_chunk *get_available_chunk(t_block *block, t_size type)
 	{
 		if (chunk->freed && chunk->size >= type.user_size)
 		{
+			log("Using chunk %p that was freed from block %p", chunk, block);
 			chunk->freed = false;
 			return (chunk);
 		}
 		chunk = chunk->next;
 	}
+	if (chunk)
+		log("Using chunk %p from block %p", chunk, block);
 	return (chunk);
 }
 
@@ -89,7 +98,7 @@ void	*heap_allocate(t_size type)
 	return (void *)((char *)new_chunk + (size_t)align_address((void *)sizeof(t_chunk)));
 }
 
-void	*malloc(size_t size)
+void	*_malloc(size_t size)
 {
 	void	*ptr;
 	t_size	type;
@@ -98,9 +107,16 @@ void	*malloc(size_t size)
 
 	type = choose_type(size);
 	ptr = heap_allocate(type);
-	if (get_env(ENV_PRE_SCRIBBLE))
-		ft_memset(ptr, 0xAA, size);
-
+	if (ptr && get_env(ENV_PRE_SCRIBBLE))
+	{
+		log("EnvPreScribble Detected setting %p to 0xAA", ptr);
+		ft_memset(ptr, 0xAA, (size_t)align_address((void *)size));
+	}
+	
+	if (ptr)
+		log("Heap allocation is successfull (%p)\n", ptr);
+	else
+		log("Heap allocation is NULL\n");
 	pthread_mutex_unlock(&g_malloc_mutex);
 	return (ptr);
 }
