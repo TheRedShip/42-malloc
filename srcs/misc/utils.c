@@ -75,32 +75,32 @@ bool	get_env(t_env env)
 	return (env_cache & env);
 }
 
-#undef malloc
-#undef realloc
-#undef free
-#undef calloc
-
 void log_debug(const char *file, int line, const char *function, const char *format, ...)
 {
-    static bool init = false;
-    const char *mode = init ? "a" : "w";
-    init = true;
+	va_list		args;
+	char		buffer[4096];
+	int			fd;
+	int			len;
+
+	static bool init = false;
+	int			mode = init ? O_APPEND | O_WRONLY : O_WRONLY | O_CREAT | O_TRUNC;
+	init = true;
 
 	if (!get_env(ENV_STACK_LOGGING))
 		return ;
 
-    FILE *fd = fopen("malloc.log", mode);
-    if (!fd)
-        return;
+	fd = open("malloc.log", mode, 0644);
+	if (fd == -1)
+		return;
 
-    fprintf(fd, "%s:%d %s() ", file, line, function);
+    len = snprintf(buffer, sizeof(buffer), "%s:%d %s() ", file, line, function);
 
-    va_list args;
     va_start(args, format);
-    vfprintf(fd, format, args);
+    len += vsnprintf(buffer + len, sizeof(buffer) - len, format, args);
     va_end(args);
+    buffer[sizeof(buffer) - 1] = '\0';
 
-    fprintf(fd, "\n");
-
-    fclose(fd);
+	write(fd, buffer, len);
+	ft_dprintf(fd, "\n");
+	close(fd);
 }

@@ -6,7 +6,7 @@
 /*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:10:41 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/15 18:26:56 by ycontre          ###   ########.fr       */
+/*   Updated: 2024/08/15 18:53:41 by ycontre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ void	free(void	*ptr);
 void	free_all();
 void	show_alloc_mem();
 void	show_alloc_mem_ex();
-
-
 
 void	*align_address(void *ptr);
 t_size	choose_type(size_t size);
