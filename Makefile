@@ -6,7 +6,7 @@
 #    By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:17:35 by rgramati          #+#    #+#              #
-#    Updated: 2024/08/13 17:57:17 by ycontre          ###   ########.fr        #
+#    Updated: 2024/08/15 15:32:10 by ycontre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,6 +111,8 @@ test:
 
 clean:
 	@$(RM) $(OBJS)
+	@$(RM) malloc.log
+	@$(MAKE) -C $(LFT_DIR) dclean
 
 dclean: clean
 	@$(RM) $(OBJS_DIR)
