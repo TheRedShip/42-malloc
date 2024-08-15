@@ -88,11 +88,11 @@ void	_free(void	*ptr)
 	t_block	*block = NULL;
 	t_chunk *chunk = NULL;
 
-	pthread_mutex_lock(&g_malloc_mutex);
-
-	log("Trying to free %p", ptr);
 	if (!ptr)
 		return ;
+
+	pthread_mutex_lock(&g_malloc_mutex);
+	log("Trying to free %p", ptr);
 
 	if (!get_block_chunk(ptr, &block, &chunk) || chunk->freed)
 	{
