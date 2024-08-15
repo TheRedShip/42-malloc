@@ -6,7 +6,7 @@
 #    By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:17:35 by rgramati          #+#    #+#              #
-#    Updated: 2024/08/15 15:32:10 by ycontre          ###   ########.fr        #
+#    Updated: 2024/08/15 18:21:34 by ycontre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,7 @@ OBJS		:=	$(addprefix $(OBJS_DIR)/, $(SRCS:%.c=%.o))
 CC          := cc
 
 CFLAGS      := -g -pthread -Wextra -Werror -Wall -fPIC
+LDFLAGS		:= --shared
 
 IFLAGS		:= -I $(LFT_DIR)/includes -I includes
 
@@ -86,8 +87,7 @@ DIR_DUP     = mkdir -p $(@D)
 all: $(NAME)
 
 $(NAME): $(LFT) $(OBJS)
-	@cp $(LFT) $@
-	@ar rcs $@ $^
+	$(CC) $(OBJS) $(LDFLAGS) $(LFT) -o $(NAME)
 	@ln -sf $(NAME) libft_malloc.so
 	@printf "$(LINE_CLR)$(BWHITE) $(NAME): PROJECT READY !$(RESET)\n"
 
@@ -107,7 +107,7 @@ $(OBJS_DIR)/%.o: %.c
 	fi \
 
 test:
-	gcc -g main.c $(IFLAGS) $(LFT) libft_malloc.so -o test
+	gcc -g main.c $(IFLAGS) $(LFT) -Wl,-rpath,./ libft_malloc.so -o test
 
 clean:
 	@$(RM) $(OBJS)

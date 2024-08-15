@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mymalloc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
+/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:10:41 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/15 12:47:51 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/15 18:26:56 by ycontre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,10 @@ typedef struct s_block //44 bytes // 48 bytes
 void						log_debug(const char *file, int line, const char *function, const char *format, ...);
 #define log(format, ...)	log_debug(__FILE__, __LINE__, __FUNCTION__, format, ##__VA_ARGS__)
 
-void	*_malloc(size_t size);
-void	*_realloc(void *ptr, size_t size);
-void	*_calloc(size_t count, size_t size);
-void	_free(void	*ptr);
-
-#define malloc(X) _malloc(X)
-#define realloc(X, Y) _realloc(X, Y)
-#define calloc(X, Y) _calloc(X, Y)
-#define free(X) _free(X)
+void	*malloc(size_t size);
+void	*realloc(void *ptr, size_t size);
+void	*calloc(size_t count, size_t size);
+void	free(void	*ptr);
 
 void	free_all();
 void	show_alloc_mem();

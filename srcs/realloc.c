@@ -42,7 +42,7 @@ void	*get_new_ptr(size_t size, t_block *block, t_chunk *chunk, void *ptr)
 	return (new_ptr);
 }
 
-void	*_realloc(void *ptr, size_t size)
+void	*realloc(void *ptr, size_t size)
 {
 	t_block	*block;
 	t_chunk *chunk;

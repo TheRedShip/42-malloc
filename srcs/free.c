@@ -82,7 +82,7 @@ void	merge_chunk(t_chunk *chunk, t_chunk *next_chunk)
 	chunk->size += next_chunk->size + (size_t)align_address((void *)sizeof(t_chunk));
 }
 
-void	_free(void	*ptr)
+void	free(void	*ptr)
 {
 	size_t	allocation_cost;
 	t_block	*block = NULL;

@@ -1,12 +1,5 @@
 {
 	"files.associations": {
-		"*.cs": "csharp",
-		"malloc.h": "c",
-		"libft.h": "c",
-		"stdlib.h": "c",
-		"mymalloc.h": "c",
-		"mman.h": "c",
-		"corecrt_malloc.h": "c",
-		"stdbool.h": "c"
+		"mymalloc.h": "c"
 	}
 }

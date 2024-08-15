@@ -6,7 +6,7 @@
 /*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:30:40 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/15 15:42:13 by ycontre          ###   ########.fr       */
+/*   Updated: 2024/08/15 18:22:08 by ycontre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,12 +230,12 @@ void	test_mem_ex()
 int main(int ac, char **av, char **env)
 {
 	// test_mallocs();
-	test_realloc();
+	// test_realloc();
 	// test_free();
 	// test_page_fault();
 	// test_defrag();
 	// test_env();
-	// test_mem_ex();
+	test_mem_ex();
 	// show_alloc_mem_ex();
 
 	

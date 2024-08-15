@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: TheRed <TheRed@students.42.fr>             +#+  +:+       +#+        */
+/*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:09:57 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/15 12:56:04 by TheRed           ###   ########.fr       */
+/*   Updated: 2024/08/15 18:29:18 by ycontre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	*heap_allocate(t_size type)
 	return (void *)((char *)new_chunk + (size_t)align_address((void *)sizeof(t_chunk)));
 }
 
-void	*_malloc(size_t size)
+void	*malloc(size_t size)
 {
 	void	*ptr;
 	t_size	type;
