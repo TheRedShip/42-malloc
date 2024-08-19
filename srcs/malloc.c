@@ -6,15 +6,11 @@
 /*   By: ycontre <ycontre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:09:57 by ycontre           #+#    #+#             */
-/*   Updated: 2024/08/15 18:29:18 by ycontre          ###   ########.fr       */
+/*   Updated: 2024/08/19 13:43:18 by ycontre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mymalloc.h"
-
-#ifdef malloc
-	#undef malloc
-#endif
 
 t_block				*g_block = NULL;
 pthread_mutex_t		g_malloc_mutex;
@@ -117,6 +113,7 @@ void	*malloc(size_t size)
 		log("Heap allocation is successfull (%p)\n", ptr);
 	else
 		log("Heap allocation is NULL\n");
+
 	pthread_mutex_unlock(&g_malloc_mutex);
 	return (ptr);
 }
